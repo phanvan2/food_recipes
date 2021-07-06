@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<head>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="../js/create_alert.js"></script>

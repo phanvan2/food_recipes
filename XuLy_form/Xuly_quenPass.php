@@ -1,6 +1,13 @@
 <?php
+require '../sendMail/PHPMailer.php';
+require '../sendMail/SMTP.php';
+require '../sendMail/Exception.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 	if(isset($_POST['email'])){
 		$email = $_POST['email']; 
+		echo $email; 
 		if(!isset($conn)){
 				require 'Xuly_ketNoiSQL.php'; 
 				$conn1 = new connectSQL ; // kết nối đến sql
@@ -9,12 +16,12 @@
 			}
 			$email = $_POST['email'];
 			$bang_user = new bang($conn, 'user');
-			$bang_user->setResult_select(" id " , " email = $email" , "id DESC"); 
+			$bang_user->setResult_select(" id " , " email = '$email'" , "id DESC"); 
 			$kq_user = $bang_user -> getResult_select();
 			if(mysqli_num_rows($kq_user) <= 0) header("Location: ../dangnhap.php");
 		$ma_pass = rand(100000, 999999); 
 		setcookie("ma_pass", $ma_pass, time() + 180,'/');
-		include ('../sendMail/PHPMailerAutoload.php');
+		//include ('../sendMail/PHPMailerAutoload.php');
     	$mail = new PHPMailer;
 	   	$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
 	    $mail->isSMTP();                                            // Send using SMTP
@@ -73,7 +80,7 @@
 			$bang_user = new bang($conn, 'user');
 		
 			$bang_user->setResult_update(" password = '$pass' ", " email = '$email'"); 
-			header("Location: ../dangnhap.php");
+			header("Location: ../index.php");
 		}
 	}
 ?>
